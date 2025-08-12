@@ -1,6 +1,6 @@
 # Contributing to Kokoro-FastAPI
 
-Always appreciate community involvement in making this project better. 
+Always appreciate community involvement in making this project better.
 
 ## Development Setup
 
@@ -8,7 +8,7 @@ We use `uv` for managing Python environments and dependencies, and `ruff` for li
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/remsky/Kokoro-FastAPI.git
+    git clone https://github.com/kprinssu/Kokoro-FastAPI.git
     cd Kokoro-FastAPI
     ```
 
@@ -38,7 +38,7 @@ We use `uv` for managing Python environments and dependencies, and `ruff` for li
 
 ## Running Tests
 
-Before submitting changes, please ensure all tests pass as this is a automated requirement. The tests are run using `pytest`. 
+Before submitting changes, please ensure all tests pass as this is a automated requirement. The tests are run using `pytest`.
 ```bash
 # Make sure your virtual environment is activated
 uv run pytest
@@ -59,7 +59,7 @@ This command will build the Docker images (if they've changed) and start the ser
 
 ## Code Formatting and Linting
 
-We use `ruff` to maintain code quality and consistency. Please format and lint your code before committing. 
+We use `ruff` to maintain code quality and consistency. Please format and lint your code before committing.
 
 1.  **Format the code:**
     ```bash

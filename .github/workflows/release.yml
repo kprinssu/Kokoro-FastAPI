@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - release # Trigger when commits are pushed to the release branch (e.g., after merging master)
+      - rocm-release
     paths-ignore:
       - '**.md'
       - 'docs/**'
