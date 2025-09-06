@@ -9,6 +9,7 @@ RUN apt-get update && apt upgrade -y && apt-get install -y --no-install-recommen
     espeak-ng \
     espeak-ng-data \
     rocrand \
+    rocrand-dev \
     git \
     libsndfile1 \
     curl \
