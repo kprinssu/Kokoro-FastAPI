@@ -46,7 +46,7 @@ ENV PHONEMIZER_ESPEAK_PATH=/usr/bin \
 
 # Install dependencies with GPU extras (using cache mounts)
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv venv --python 3.10 && \
+    uv venv --python 3.12 && \
     uv sync --extra rocm
 
 # Copy project files including models
