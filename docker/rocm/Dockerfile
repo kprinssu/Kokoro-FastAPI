@@ -1,4 +1,4 @@
-FROM rocm/dev-ubuntu-24.04:6.4.3
+FROM rocm/dev-ubuntu-24.04:6.4.3-complete
 ENV DEBIAN_FRONTEND=noninteractive \
     PHONEMIZER_ESPEAK_PATH=/usr/bin \
     PHONEMIZER_ESPEAK_DATA=/usr/share/espeak-ng-data \
@@ -16,6 +16,7 @@ RUN apt-get update && apt upgrade -y && apt-get install -y --no-install-recommen
     wget \
     nano \
     g++ \
+    zstd \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /usr/share/espeak-ng-data \
@@ -32,7 +33,6 @@ RUN apt-get update && apt upgrade -y && apt-get install -y --no-install-recommen
     && chown -R appuser:appuser /app \
     # Models folder
     && mkdir -p /app/api/src/models/v1_0
-WORKDIR /app
 
 USER appuser
 WORKDIR /app
@@ -46,13 +46,26 @@ ENV PHONEMIZER_ESPEAK_PATH=/usr/bin \
 
 # Install dependencies with GPU extras (using cache mounts)
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv venv --python 3.10 && \
+    uv venv --python 3.12 && \
     uv sync --extra rocm
+
+# Run kbd files
+ENV ROCM_VERSION=6.4.3
+COPY --chown=appuser:appuser docker/rocm/kbd_install.sh /tmp/
+RUN /tmp/kbd_install.sh
+
+# Support older GFX Arch
+RUN cd /tmp && wget https://archlinux.org/packages/extra/x86_64/rocblas/download -O rocblas.tar.zst \
+    && pwd && ls -lah ./ \
+    && tar --zstd -xvf rocblas.tar.zst && rm rocblas.tar.zst \
+    && rm -rf /app/.venv/lib/python3.12/site-packages/torch/lib/rocblas/library/ \
+    && mv ./opt/rocm/lib/rocblas/library/ /app/.venv/lib/python3.12/site-packages/torch/lib/rocblas/
 
 # Copy project files including models
 COPY --chown=appuser:appuser api ./api
 COPY --chown=appuser:appuser web ./web
 COPY --chown=appuser:appuser docker/scripts/ ./
+
 RUN chmod +x ./entrypoint.sh
 
 # Set all environment variables in one go
