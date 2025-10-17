@@ -1,4 +1,4 @@
-FROM python:3.10-slim 
+FROM python:3.12-slim 
 
 # Install dependencies and check espeak location
 # Rust is required to build sudachipy and pyopenjtalk-plus
@@ -22,7 +22,7 @@ WORKDIR /app
 COPY --chown=appuser:appuser pyproject.toml ./pyproject.toml
 
 # Install dependencies with CPU extras
-RUN uv venv --python 3.10 && \
+RUN uv venv --python 3.12 && \
     uv sync --extra cpu --no-cache
 
 # Copy project files including models
