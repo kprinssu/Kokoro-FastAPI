@@ -52,7 +52,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 # Run kbd files
 ENV ROCM_VERSION=6.4.3
 COPY --chown=appuser:appuser docker/rocm/kbd_install.sh /tmp/
-RUN /tmp/kbd_install.sh
+RUN chmod +x /tmp/kbd_install.sh && /tmp/kbd_install.sh
 
 # Support older GFX Arch
 RUN cd /tmp && wget https://archlinux.org/packages/extra/x86_64/rocblas/download -O rocblas.tar.zst \
