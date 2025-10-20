@@ -54,7 +54,7 @@ ENV ROCM_VERSION=6.4.4
 COPY --chown=appuser:appuser docker/rocm/kbd_install.sh /tmp/
 RUN chmod +x /tmp/kbd_install.sh && /tmp/kbd_install.sh \
     && cd /tmp && wget https://archlinux.org/packages/extra/x86_64/rocblas/download -O rocblas.tar.zst \
-    && tar --zstd --keep-old-files --no-overwrite-dir -xvf rocblas.tar.zst && rm rocblas.tar.zst \
+    && tar --zstd --no-overwrite-dir -xvf rocblas.tar.zst && rm rocblas.tar.zst \
     && rm -rf /app/.venv/lib/python3.12/site-packages/torch/lib/rocblas/library/ \
     && mv ./opt/rocm/lib/rocblas/library/ /app/.venv/lib/python3.12/site-packages/torch/lib/rocblas/ \
     && rm -rf /tmp/*
