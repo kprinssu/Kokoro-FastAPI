@@ -58,16 +58,6 @@ jobs:
             echo "Tag $TAG_NAME does not exist. Proceeding with release."
           fi
 
-      - name: Free disk space # Optional: Keep as needed for large builds
-        run: |
-          echo "Listing current disk space"
-          df -h
-          echo "Cleaning up disk space..."
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache
-          sudo docker system prune -af
-          echo "Disk space after cleanup"
-          df -h
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3 # Use v3
 
