@@ -63,7 +63,9 @@ RUN cd /tmp && wget https://archive.archlinux.org/packages/r/rocblas/rocblas-${R
     && pwd && ls -lah ./ \
     && tar --zstd -xvf rocblas.tar.zst && rm rocblas.tar.zst \
     && rm -rf /app/.venv/lib/python3.12/site-packages/torch/lib/rocblas/library/ \
-    && mv ./opt/rocm/lib/rocblas/library/ /app/.venv/lib/python3.12/site-packages/torch/lib/rocblas/
+    && cp -r ./opt/rocm/lib/rocblas/library/ /app/.venv/lib/python3.12/site-packages/torch/lib/rocblas/ \
+    && rm -rf /app/.venv/lib/python3.12/site-packages/torch/lib/hipblaslt/library/ \
+    && mv ./opt/rocm/lib/rocblas/library/ /app/.venv/lib/python3.12/site-packages/torch/lib/hipblaslt/
 
 # Copy project files including models
 COPY --chown=appuser:appuser api ./api
