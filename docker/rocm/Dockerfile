@@ -60,12 +60,9 @@ RUN if [ "$INCLUDE_JAPANESE" = "true" ]; then \
 # Support older GFX Arch
 ENV ROCBLAS_VERSION=7.2.4-2
 RUN cd /tmp && wget https://archive.archlinux.org/packages/r/rocblas/rocblas-${ROCBLAS_VERSION}-x86_64.pkg.tar.zst -O rocblas.tar.zst \
-    && pwd && ls -lah ./ \
     && tar --zstd -xvf rocblas.tar.zst && rm rocblas.tar.zst \
     && rm -rf /app/.venv/lib/python3.12/site-packages/torch/lib/rocblas/library/ \
-    && cp -r ./opt/rocm/lib/rocblas/library/ /app/.venv/lib/python3.12/site-packages/torch/lib/rocblas/ \
-    && rm -rf /app/.venv/lib/python3.12/site-packages/torch/lib/hipblaslt/library/ \
-    && mv ./opt/rocm/lib/rocblas/library/ /app/.venv/lib/python3.12/site-packages/torch/lib/hipblaslt/
+    && mv ./opt/rocm/lib/rocblas/library/ /app/.venv/lib/python3.12/site-packages/torch/lib/rocblas/
 
 # Copy project files including models
 COPY --chown=appuser:appuser api ./api
