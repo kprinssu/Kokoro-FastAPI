@@ -78,6 +78,10 @@ class KokoroV1(BaseModelBackend):
             else:
                 self._model = self._model.cpu()
 
+            logger.info("Model will be compiled")
+            self._model.compile()
+            logger.info("Model compiled successfully")
+
         except FileNotFoundError:
             raise
         except Exception as e:
