@@ -59,6 +59,7 @@ rocm = [
     "torch==2.12.1+rocm7.2",
     "pytorch-triton-rocm>=3.5.1",
     "triton-rocm>=3.7.1",
+    "miopen-conv-fix@https://github.com/imagilux/miopen-conv-fix/releases/download/v0.2.0/miopen_conv_fix-0.2.0-cp312-cp312-linux_x86_64.whl",
 ]
 test = [
     "pytest==8.3.5",

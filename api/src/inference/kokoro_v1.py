@@ -14,6 +14,8 @@ from ..core.model_config import model_config
 from ..structures.schemas import WordTimestamp
 from .base import AudioChunk, BaseModelBackend
 
+import miopen_conv_fix
+
 
 class KokoroV1(BaseModelBackend):
     """Kokoro backend with controlled resource management."""
@@ -78,10 +80,8 @@ class KokoroV1(BaseModelBackend):
             else:
                 self._model = self._model.cpu()
 
-            logger.info("Model will be compiled")
-            self._model.compile()
-            logger.info("Model compiled successfully")
-
+            logger.info("Model being patched with MIOPEN patch")
+            miopen_conv_fix.patch_module(self._model)
         except FileNotFoundError:
             raise
         except Exception as e:
@@ -104,6 +104,8 @@ class KokoroV1(BaseModelBackend):
             self._pipelines[lang_code] = KPipeline(
                 lang_code=lang_code, model=self._model, device=self._device
             )
+            logger.info("Patching KPipeline with MIOPEN patch")
+            miopen_conv_fix.patch_module(self._pipelines[lang_code])
         return self._pipelines[lang_code]
 
     async def generate_from_tokens(
