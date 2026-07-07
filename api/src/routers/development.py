@@ -45,8 +45,8 @@ async def viztracer():
     try:
         with open("/tmp/result.json", "r") as f:
             data = json.load(f)
-
-    return JSONResponse(data)
+    finally:
+        return JSONResponse(data)
 
 @router.post("/dev/phonemize", response_model=PhonemeResponse)
 async def phonemize_text(request: PhonemeRequest) -> PhonemeResponse:
