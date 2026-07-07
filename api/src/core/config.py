@@ -42,6 +42,7 @@ class Settings(BaseSettings):
     )
 
     enable_viztracer: bool = False  # Whether to enable Viztracer middleware
+    enable_conv_fixes: bool = False
 
     # Container absolute paths
     model_dir: str = "/app/api/src/models"  # Absolute path in container

@@ -38,6 +38,16 @@ async def get_tts_service() -> TTSService:
     )  # Create service with properly initialized managers
 
 
+@router.get("/dev/viztracer")
+async def viztracer():
+    """ Downloads the viztracer logs """
+    data = {}
+    try:
+        with open("/tmp/result.json", "r") as f:
+            data = json.load(f)
+
+     return JSONResponse(data)
+
 @router.post("/dev/phonemize", response_model=PhonemeResponse)
 async def phonemize_text(request: PhonemeRequest) -> PhonemeResponse:
     """Convert text to phonemes using Kokoro's quiet mode.
