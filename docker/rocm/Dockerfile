@@ -37,13 +37,6 @@ RUN apt-get update && apt upgrade -y && apt-get install -y --no-install-recommen
 USER appuser
 WORKDIR /app
 
-# Support older GFX Arch
-ENV ROCBLAS_VERSION=7.2.4-2
-RUN cd /tmp && wget https://archive.archlinux.org/packages/r/rocblas/rocblas-${ROCBLAS_VERSION}-x86_64.pkg.tar.zst -O rocblas.tar.zst \
-    && tar --zstd -xvf rocblas.tar.zst && rm rocblas.tar.zst \
-    && rm -rf /app/.venv/lib/python3.12/site-packages/torch/lib/rocblas/library/ \
-    && mv ./opt/rocm/lib/rocblas/library/ /app/.venv/lib/python3.12/site-packages/torch/lib/rocblas/
-
 # Copy dependency files
 COPY --chown=appuser:appuser pyproject.toml ./pyproject.toml
 
@@ -63,6 +56,13 @@ ARG INCLUDE_JAPANESE=true
 RUN if [ "$INCLUDE_JAPANESE" = "true" ]; then \
         .venv/bin/python -m unidic download; \
     fi
+
+# Support older GFX Arch
+ENV ROCBLAS_VERSION=7.2.4-2
+RUN cd /tmp && wget https://archive.archlinux.org/packages/r/rocblas/rocblas-${ROCBLAS_VERSION}-x86_64.pkg.tar.zst -O rocblas.tar.zst \
+    && tar --zstd -xvf rocblas.tar.zst && rm rocblas.tar.zst \
+    && rm -rf /app/.venv/lib/python3.12/site-packages/torch/lib/rocblas/library/ \
+    && mv ./opt/rocm/lib/rocblas/library/ /app/.venv/lib/python3.12/site-packages/torch/lib/rocblas/
 
 # Copy project files including models
 COPY --chown=appuser:appuser api ./api
