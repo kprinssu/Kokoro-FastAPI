@@ -80,9 +80,9 @@ class KokoroV1(BaseModelBackend):
             else:
                 self._model = self._model.cpu()
 
-        if settings.enable_conv_fixes:
-            logger.info("Apply global patches to MiOpen")
-            miopen_conv_fix.patch()
+            if settings.enable_conv_fixes:
+                logger.info("Apply global patches to MiOpen")
+                miopen_conv_fix.patch()
 
         except FileNotFoundError:
             raise
