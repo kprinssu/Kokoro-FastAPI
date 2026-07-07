@@ -19,6 +19,7 @@ from .routers.development import router as dev_router
 from .routers.openai_compatible import router as openai_router
 from .routers.web_player import router as web_router
 
+from .middlewares.viztracer import ViztracerMiddleware
 
 def setup_logger():
     """Configure loguru logger with custom formatting"""
@@ -131,6 +132,10 @@ if settings.cors_enabled:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+if settings.enable_viztracer:
+    app.add_middleware(ViztracerMiddleware)  # Add Viztracer middleware if enabled
+
 
 # Include routers
 app.include_router(openai_router, prefix="/v1")

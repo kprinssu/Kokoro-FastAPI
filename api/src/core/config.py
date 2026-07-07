@@ -41,6 +41,8 @@ class Settings(BaseSettings):
         False  # Whether to allow saving combined voices locally
     )
 
+    enable_viztracer: bool = False  # Whether to enable Viztracer middleware
+
     # Container absolute paths
     model_dir: str = "/app/api/src/models"  # Absolute path in container
     voices_dir: str = "/app/api/src/voices/v1_0"  # Absolute path in container
